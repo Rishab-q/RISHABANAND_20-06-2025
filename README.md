@@ -89,7 +89,7 @@ This logic ensures that:
 ### 1. `/trigger_report`
 
 - **Method**: `POST`
-- **Description**: Triggers asynchronous generation of the report.
+- **Description**: Triggers generation of the report.
 - **Returns**: A unique `report_id` to track report generation.
 
 ### 2. `/get_report?report_id=<id>`

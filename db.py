@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-DATABASE_URL = "postgresql://postgres:Rishab%401@localhost/db_csv?options=-c%20timezone=UTC"  
+DATABASE_URL = os.get_env("DB_URL")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

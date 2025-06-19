@@ -17,22 +17,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/jii")
-def read_root(id: str, start: datetime, end: datetime, db=Depends(get_db)):
-    query = db.query(Store_status).filter(
-        Store_status.store_id == id,
-        Store_status.timestamp_utc >= start,
-        Store_status.timestamp_utc <= end
-    ).all()
-    return query
-
-@app.get("/trigger")
+@app.get("/trigger_report")
 def trigger_report(db=Depends(get_db), background_tasks: BackgroundTasks = None):
     report_id=uuid.uuid4()
     background_tasks.add_task(generate_report, report_id=report_id, db=db)
     return {"report_id": str(report_id)}
 
-@app.get("/report/{report_id}")
+@app.get("/get_report/{report_id}")
 def get_report(report_id: uuid.UUID, db=Depends(get_db)):
     report = db.query(Report).filter(Report.report_id == report_id).first()
     if report.status == 'Running':
